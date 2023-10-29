@@ -16,7 +16,7 @@ class TestInterpreter:
         assert interpreter.eval("2-2") == 0
 
     def test_add_with_letter(self, interpreter):
-        with pytest.raises(ValueError):
+        with pytest.raises(SyntaxError):
             interpreter.eval("2+a")
             interpreter.eval("t+2")
 
