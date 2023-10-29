@@ -46,10 +46,16 @@ jobs:
         poetry run pytest --cov --cov-report=xml
         poetry run coverage-badge -o coverage.svg -f
 
-    - name: Commit and push coverage badge
+    - name: Configure Git
       run: |
         git config --global user.email "coverage_tests_action@github.com"
-        git config --global user.name "Coverage badge from GitHub Action"
+        git config --global user.name "coverage_tests_action"
+    
+    - name: Commit and push coverage badge
+      run: |
         git add coverage.svg
         git commit -m "Add coverage badge"
-        git push origin main
+        git remote add origin_with_token https://$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git
+        git push origin_with_token main
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
