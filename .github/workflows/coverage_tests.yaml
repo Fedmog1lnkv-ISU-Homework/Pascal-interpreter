@@ -1,4 +1,4 @@
-name: "Test Suite"
+name: "Tests & Coverage badge"
 
 on:
   push:
@@ -11,8 +11,8 @@ on:
       - main
 
 jobs:
-  if_merged:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true)
+  generate_coverage_badge:
+    if: (github.event_name == 'push' && github.actor != 'coverage_tests_action') || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
 
     steps:
