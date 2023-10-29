@@ -18,6 +18,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        persist-credentials: false
   
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -53,9 +55,11 @@ jobs:
     
     - name: Commit and push coverage badge
       run: |
+        git config --global user.email "coverage_tests_action@github.com"
+        git config --global user.name "coverage_tests_action"
         git add coverage.svg
         git commit -m "Add coverage badge"
         git remote add origin_with_token https://$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git
-        git push origin_with_token main
+        git push origin_with_token HEAD:main
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
