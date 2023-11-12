@@ -33,7 +33,7 @@ class TestAstStr():
         complex_statement = ComplexStatement()
         assert str(complex_statement) == "ComplexStatement[]"
 
-    def test_var_str(self):s
+    def test_var_str(self):
         token = Token(TokenType.ID, 'x')
         var = Var(token)
         assert str(var) == "VarToken(TokenType.ID, x)"
