@@ -2,11 +2,14 @@ import os
 from interpreter import Interpreter
 import sys
 
+
 def list_files(directory):
     return [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
 
+
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def main():
     interp = Interpreter()
@@ -44,6 +47,7 @@ def main():
 
         except (ValueError, IndexError):
             print("Invalid choice. Please enter a valid file number.")
+
 
 if __name__ == "__main__":
     main()

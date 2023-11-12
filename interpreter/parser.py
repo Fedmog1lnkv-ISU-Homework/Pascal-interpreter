@@ -9,35 +9,14 @@ class Parser:
         self._lexer = Lexer()
 
     def check_token(self, type_: TokenType):
-        while self._current_token and self._current_token.type_ == TokenType.EOL:
-            self._current_token = self._lexer.next()
         if self._current_token and self._current_token.type_ == type_:
             self._current_token = self._lexer.next()
         else:
             raise SyntaxError("Invalid token order")
 
     def block(self):
-        declarations = self.declarations()
         complex_statement = self.complex_statement()
-        return Block(declarations, complex_statement)
-
-    def declarations(self):
-        declarations = []
-        while self._current_token and self._current_token.type_ == TokenType.ID:
-            declarations.append(self.variable_declaration())
-            self.check_token(TokenType.SEMICOLON)
-        return declarations
-
-    def variable_declaration(self):
-        nodes = [Var(self._current_token)]
-        self.check_token(TokenType.ID)
-        while self._current_token and self._current_token.type_ == TokenType.COMMA:
-            self.check_token(TokenType.COMMA)
-            nodes.append(Var(self._current_token))
-            self.check_token(TokenType.ID)
-        self.check_token(TokenType.SEMICOLON)
-
-        return nodes
+        return Block(complex_statement)
 
     def complex_statement(self):
         self.check_token(TokenType.BEGIN)
@@ -56,9 +35,6 @@ class Parser:
         while self._current_token and self._current_token.type_ == TokenType.SEMICOLON:
             self.check_token(TokenType.SEMICOLON)
             results.append(self.statement())
-
-        if self._current_token and self._current_token.type_ == TokenType.ID:
-            raise SyntaxError("Invalid statement")
         return results
 
     def statement(self):

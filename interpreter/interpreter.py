@@ -4,7 +4,7 @@ from .ast import Number, BinOp, UnaryOp, Assign, Var, ComplexStatement, EmptyNod
 
 class NodeVisitor:
 
-    def visit(self, node): # pragma: no cover
+    def visit(self, node):  # pragma: no cover
         pass
 
 
@@ -72,8 +72,6 @@ class Interpreter(NodeVisitor):
                 raise ValueError("Invalid operator")
 
     def visit_block(self, node):
-        for declaration in node.declarations:
-            self.visit(declaration)
         self.visit(node.complex_statement)
 
     def visit_complex_statement(self, node):
